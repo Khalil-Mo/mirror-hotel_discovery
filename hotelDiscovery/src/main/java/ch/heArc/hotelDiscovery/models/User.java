@@ -13,7 +13,7 @@ public class User {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column
-    private Integer idUsers;
+    private Integer idUser;
     
     @Column
     private String email;
@@ -38,7 +38,7 @@ public class User {
     }
 
     public Integer getId() {
-        return this.idUsers;
+        return this.idUser;
     }
     
     public String getEmail() {
@@ -53,8 +53,8 @@ public class User {
         return this.surname;
     }
 
-	public void setIdUsers(Integer idUsers) {
-		this.idUsers = idUsers;
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
 	}
 
 	public void setEmail(String email) {
