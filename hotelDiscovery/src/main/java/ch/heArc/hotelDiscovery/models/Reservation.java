@@ -4,9 +4,12 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,11 +20,20 @@ public class Reservation {
     @Column
     private Integer idReservation;
     	
-    @Column
-    private Integer idUser;
+    /*@Column
+    private Integer idUser;*/
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUser")
+    private User user;
     
-    @Column
-    private Integer idRoom;
+    
+    /*@Column
+    private Integer idRoom;*/
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idRoom")
+    private Room room;
     
     @Column
     private Date DateStart;
@@ -42,26 +54,6 @@ public class Reservation {
 
 	public void setIdReservation(Integer idReservation) {
 		this.idReservation = idReservation;
-	}
-
-
-	public Integer getIdUser() {
-		return idUser;
-	}
-
-
-	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
-	}
-
-
-	public Integer getIdRoom() {
-		return idRoom;
-	}
-
-
-	public void setIdRoom(Integer idRoom) {
-		this.idRoom = idRoom;
 	}
 
 

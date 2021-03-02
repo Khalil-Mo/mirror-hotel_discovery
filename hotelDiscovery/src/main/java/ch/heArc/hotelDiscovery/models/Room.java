@@ -2,9 +2,12 @@ package ch.heArc.hotelDiscovery.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +18,10 @@ public class Room {
     @Column
     private Integer idRoom;
     
-    @Column
-    private Integer idHotel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idHotel")
+    private Hotel hotel;
     
     @Column
     private String description;
@@ -36,14 +41,6 @@ public class Room {
 
 	public void setIdRoom(Integer idRoom) {
 		this.idRoom = idRoom;
-	}
-
-	public Integer getIdHotel() {
-		return idHotel;
-	}
-
-	public void setIdHotel(Integer idHotel) {
-		this.idHotel = idHotel;
 	}
 
 	public String getDescription() {
