@@ -48,8 +48,8 @@ katalon_test_suite:
 sonarqube:
   stage: sonarqube
   script:
-    - echo "start sonarqube stage"
-    - echo "sonarqube ok"
+    - mvn sonar:sonar -Dsonar.projectKey=hotel-dicovery -Dsonar.host.url=http://localhost:9000 -Dsonar.login=63a23f84989f44b3ce151397d8986472d7abea2d
+
   only:
     - master
   tags:
