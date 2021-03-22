@@ -40,7 +40,6 @@ katalon_test_suite:
   script:
     - echo "start katalon test suite"
     - echo "katalon test suite ok"
-    - ip addr show
   only:
     - master
   tags:
