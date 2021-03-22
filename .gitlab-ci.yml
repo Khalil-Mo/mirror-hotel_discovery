@@ -40,10 +40,12 @@ katalon_test_suite:
   script:
     - echo "start katalon test suite"
     - echo "katalon test suite ok"
+    - ip addr show
   only:
     - master
   tags:
     - alpine-docker
+    
 
 sonarqube:
   image: maven:latest
@@ -53,7 +55,7 @@ sonarqube:
   only:
     - master
   tags:
-    - alpine-docker
+    - shell-hotel-test
 
 
 deploy_ssh:
