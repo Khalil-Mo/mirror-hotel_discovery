@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ch.heArc.hotelDiscovery.models.User;
 import ch.heArc.hotelDiscovery.repository.IUserRepository;
+import ch.heArc.hotelDiscovery.services.UserService;
 
 @Controller
 
@@ -20,6 +21,9 @@ public class UserController {
     IUserRepository userRepository;
     
     @Autowired 
+    UserService userService;
+    
+   
     
     @GetMapping("/all")
     public  String getAll(Map<String, Object> model) {
@@ -44,4 +48,21 @@ public class UserController {
         return "user-form";
         
     }
+    
+    @PostMapping("/signup")
+	String signUp(User user) {
+    	
+
+		userService.signUpUser(user);
+
+		return "redirect:/login";
+	}
+    
+    @GetMapping("/signup")
+	String signUp(Model model) {
+    	User u = new User();
+    	model.addAttribute("user", u);
+		return "signup";
+	}
+    
 }

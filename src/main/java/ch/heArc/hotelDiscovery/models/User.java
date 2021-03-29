@@ -1,5 +1,10 @@
 package ch.heArc.hotelDiscovery.models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,9 +12,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+
+
+@Entity(name = "Users")
 @Table(name="user")
-public class User {
+public class User implements UserDetails {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column
@@ -30,7 +42,19 @@ public class User {
     @Column
     private Boolean isManager;
     
-    @Column
+    public Integer getIdUser() {
+		return idUser;
+	}
+
+	public Boolean getIsManager() {
+		return isManager;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	@Column
     private Boolean isAdmin;
 
     public User() {
@@ -79,5 +103,49 @@ public class User {
 
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("admin");
+		List<SimpleGrantedAuthority> l = new ArrayList<SimpleGrantedAuthority>();
+		if (isAdmin)
+			l.add(new SimpleGrantedAuthority("admin"));
+		if (isManager)
+			l.add(new SimpleGrantedAuthority("manager"));
+		
+		l.add(new SimpleGrantedAuthority("connected"));
+		
+		return l;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

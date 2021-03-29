@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head th:insert="fragments/general.html :: head"></head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div class="container">
+		<div class="text-center">
+			<form class="form-signin" th:action="@{/signup}" th:object="${user}" method="post">
+				<h1 class="h3 mb-3 font-weight-normal">Please Sign in</h1>
+				<label for="inputEmail" class="sr-only">Email address</label> <input
+					type="email" id="inputEmail" class="form-control"
+					placeholder="Email address" th:field="*{email}" required autofocus
+					value="nicolas.laoun@he-arc.ch"> <label for="inputPassword"
+					class="sr-only">Password</label>
+					
+					<input type="password"
+					id="inputPassword" class="form-control" placeholder="Password"
+					th:field="*{password}" required> 
+					
+					<label
+					for="inputPassword2" class="sr-only">Password</label> <input
+					type="password" id="inputPassword2" class="form-control"
+					placeholder="Password" name="password2" required>
+					
+					<label class="">Manager</label>
+					<input type="checkbox" class="form-control" th:field="*{isManager}"/>
+					
+
+
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+					up</button>
+			</form>
+		</div>
+	</div>
+	<footer th:insert="fragments/general.html :: footer"> </footer>
+</body>
+</html>

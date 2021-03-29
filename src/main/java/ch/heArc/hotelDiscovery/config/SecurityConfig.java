@@ -1,5 +1,6 @@
 package ch.heArc.hotelDiscovery.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,17 +10,30 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import ch.heArc.hotelDiscovery.services.UserService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
+	
+	private final UserService userService;
+	
+	@Autowired
+	public SecurityConfig(UserService userService) {
+		this.userService = userService;
+	}
+	
+	
+
+	
+	/*@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		// authentication manager (see below)
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		auth.inMemoryAuthentication().withUser("nicolas.laoun@he-arc.ch").password(encoder.encode("nico"))
 				.roles("ADMIN");
-	}
+	}*/
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
@@ -60,6 +74,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .logout()
         	.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
         	.deleteCookies("JSESSIONID");
+	}
+	
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		System.out.println("test configuration");
+		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		auth.userDetailsService(userService)
+				.passwordEncoder(encoder);
 	}
 
 }
