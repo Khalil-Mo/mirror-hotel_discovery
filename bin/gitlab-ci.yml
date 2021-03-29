@@ -9,7 +9,6 @@ stages:
   - sonarqube
   - deploy
 
-
 before_script:
   - echo "Start CI/CD"
   - echo "SOME_VAR = $SOME_VAR" # calls my custom variable
@@ -45,18 +44,16 @@ katalon_test_suite:
     - master
   tags:
     - alpine-docker
-    
 
 sonarqube:
-  image: maven:latest
   stage: sonarqube
   script:
-    - mvn clean package sonar:sonar -Dsonar.projectKey=hotel -Dsonar.host.url=http://157.26.83.83:9000 -Dsonar.login=4e9efa18f023c7809b1e6944f97435a1b23a3613
+    - echo "start sonarqube stage"
+    - echo "sonarqube ok"
   only:
     - master
   tags:
-    - shell-hotel-test
-
+    - alpine-docker
 
 deploy_ssh:
   stage: deploy
@@ -73,3 +70,4 @@ deploy_ssh:
 
 after_script:
   - echo "End CI/CD"
+  

@@ -37,7 +37,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: toor
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db/hotelDiscovery?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true
-      command: mvn clean spring-boot:run
+    command: mvn clean spring-boot:run
     networks:
       - backend
       - frontend
