@@ -10,7 +10,7 @@ stages:
   - deploy
 
 before_script:
-  - sudo docker-compose up -d
+  - docker-compose up -d
   - ls
   - echo "Start CI/CD"
   - echo "SOME_VAR = $SOME_VAR" # calls my custom variable
