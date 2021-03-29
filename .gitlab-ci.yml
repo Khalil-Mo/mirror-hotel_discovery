@@ -10,6 +10,8 @@ stages:
   - deploy
 
 before_script:
+  - sudo docker-compose up -d
+  - ls
   - echo "Start CI/CD"
   - echo "SOME_VAR = $SOME_VAR" # calls my custom variable
   - echo $CI_JOB_STAGE  # calls a predefined variable -  https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
