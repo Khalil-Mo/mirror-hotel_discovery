@@ -9,7 +9,11 @@ stages:
   - sonarqube
   - deploy
 
+services:
+  - docker:dind
+
 before_script:
+  - docker info
   - ls
   - echo "Start CI/CD"
   - echo "SOME_VAR = $SOME_VAR" # calls my custom variable
