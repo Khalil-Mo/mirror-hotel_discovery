@@ -31,7 +31,8 @@ public class HotelController {
     @GetMapping("/hotels")
     public  String getAll(Map<String, Object> model) {
         
-        model.put("users", hotelRepository.findAll());
+    	User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.put("hotels", hotelRepository.findByManager(user));
         
         return "hotel/hotels";
     }

@@ -80,8 +80,6 @@ public class Hotel {
 	}
 	
 	public boolean isTheHotelManager(User user) {
-		System.out.println(user.getId());
-		System.out.println(manager.getId());
 		return manager != null && manager.getId().equals(user.getId());
 	}
 	
