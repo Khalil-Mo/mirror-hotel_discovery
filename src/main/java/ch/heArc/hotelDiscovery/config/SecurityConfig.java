@@ -66,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin").hasRole("ADMIN")
             .antMatchers("/user").hasRole("USER")
             .antMatchers("/hello").hasAnyRole("USER", "ADMIN")
+            .anyRequest().authenticated()
             .and()
         .formLogin()
             .loginPage("/login")
@@ -78,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("test configuration");
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		auth.userDetailsService(userService)
 				.passwordEncoder(encoder);

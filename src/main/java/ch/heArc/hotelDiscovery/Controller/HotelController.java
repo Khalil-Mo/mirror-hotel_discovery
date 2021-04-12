@@ -91,6 +91,16 @@ public class HotelController {
     	return "redirect:/hotels";
     }
     
+    @GetMapping("/hotel/{hotelId}/delete")
+    public String delete(Map<String, Object> model, @PathVariable int hotelId) {
+    	Optional<Hotel> hotel = getHotelById(hotelId);
+    	if (hotel.isPresent()) {
+    		hotelRepository.delete(hotel.get());
+    	}
+    	//return "hotel/edit";
+    	return "redirect:/hotels";
+    }
+    
     public Optional<Hotel> getHotelById(int hotelId) {
     	Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	Optional<Hotel> hotelOpt = hotelRepository.findById(hotelId);
@@ -107,4 +117,6 @@ public class HotelController {
     	}
     	return Optional.empty();
     }
+    
+
 }

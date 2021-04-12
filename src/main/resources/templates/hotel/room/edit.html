@@ -24,7 +24,7 @@
 				<input type="number" class="form-control" id="priceByNight" th:field="*{priceByNight}" step=".05"></input>
 			</div>
 			<input type="hidden" th:field="*{hotel}"></input>
-			<a href="/hotels" class="mr-2">Cancel</a>
+			<a th:href="@{'/hotel/'+${hotelId}+'/edit'}" class="mr-2">Back</a>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 

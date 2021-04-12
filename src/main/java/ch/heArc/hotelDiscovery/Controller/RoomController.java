@@ -45,6 +45,7 @@ public class RoomController {
 			return "redirect:/hotel/" + hotelId + "/edit";
 		Room room = new Room(hotel.get());
 		model.put("room", room);
+		model.put("hotelId", hotelId);
 		return "hotel/room/create";
 	}
 	
@@ -69,6 +70,7 @@ public class RoomController {
 			Optional<Room> room = roomRepository.findById(roomId);
 			if (room.isPresent() && room.get().ownedByThisHotel(hotel.get())) {
 				model.put("room", room);
+				model.put("hotelId", hotelId);
 				return "hotel/room/edit";
 			}
 		}
@@ -87,6 +89,20 @@ public class RoomController {
 		}
 		
 		return "redirect:/hotel/" + hotelId + "/room/" + roomId + "/edit";
+	}
+	
+	@GetMapping("/hotel/{hotelId}/room/{roomId}/delete")
+	public String deleteRoom(Map<String, Object> model, @PathVariable int hotelId, @PathVariable int roomId) {
+		
+		Optional<Hotel> hotel = hotelController.getHotelById(hotelId);
+		if (hotel.isPresent()) {
+			Optional<Room> room = roomRepository.findById(roomId);
+			if (room.isPresent() && room.get().ownedByThisHotel(hotel.get())) {
+				roomRepository.delete(room.get());
+			}
+		}
+		
+		return "redirect:/hotel/" + hotelId + "/edit";
 	}
 
 }
