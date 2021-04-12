@@ -4,8 +4,27 @@
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
 	<div class="container">
-	<h1>Home</h1>
-	</div>
-	<footer th:insert="fragments/general.html :: footer"> </footer>
+		<h1>Home</h1>
+		<p>Hotel Discovery allow you to discover all the hotels from a city</p>
+		<form></form>
+		<div class="input-group mb-3">
+			<input type="text" class="form-control" placeholder="Search a city" onkeyup="check4enter(event)" id="city">
+			<div class="input-group-append">
+				<button class="btn btn-primary" onclick="search()"><i class="bi bi-search"></i></button>
+			</div>
+		</div>
+		<script>
+			function check4enter(e) {
+				if (e.keyCode === 13) {
+					search();
+				}
+			}
+			
+			function search() {
+				let city = document.getElementById('city').value;
+				window.location = '/search/' + city;
+			}
+		</script>
+		<footer th:insert="fragments/general.html :: footer"> </footer>
 </body>
 </html>

@@ -62,7 +62,7 @@ public class UserController {
 	String signUp(Model model) {
     	User u = new User();
     	model.addAttribute("user", u);
-		return "signup";
+		return "user/signup";
 	}
     
 }
