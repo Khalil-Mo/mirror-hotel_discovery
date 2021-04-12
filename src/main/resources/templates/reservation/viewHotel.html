@@ -4,27 +4,33 @@
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
 	<div class="container">
-		<h1>Hotels</h1>
+		<h1 th:text="${hotel.name}"></h1>
+		<p th:text="${hotel.description}"></p>
 
+		<p>
+		<span th:text="${hotel.address}"></span><br>
+		<b th:text="${hotel.city}"></b>
+		</p>
+		
+		<img src="https://exp.cdn-hotels.com/hotels/1000000/990000/982000/981997/c724bace_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium">
+		
 		<div class="row">
-			<div class="col-md-4 col-sm-6" th:each="hotel : ${hotels}">
+			<div class="col-md-6 col-sm-12" th:each="room : ${rooms}">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title" th:text="${hotel.name}"></h5>
+						<h5 class="card-title"><span th:text="${room.nbBed}"></span> beds</h5>
 						<div class="card-text">
-							<i th:text="${hotel.address}"></i>
-							<div><b th:text="${hotel.city}"></b></div>
-							<div th:text="${hotel.description}" class="mt-2"></div>
+							<div><b><span th:text="${room.priceByNight}"></span> $ by nights</b></div>
+							<div><i></b><span th:text="${room.nbRoom}"></span> available room</i></div>
+							<p th:text="${room.description}"></p>
 						</div>
 						<div class="mt-3">
-							<a th:href="@{'/view/'+${hotel.idHotel}}" class="btn btn-primary">More info</a>
+							<button class="btn btn-primary">Reservation</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
 
 	</div>
 	<footer th:insert="fragments/general.html :: footer"> </footer>
