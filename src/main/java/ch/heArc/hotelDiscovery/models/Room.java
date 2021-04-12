@@ -92,4 +92,8 @@ public class Room {
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
+	
+	public boolean ownedByThisHotel(Hotel hotel) {
+		return this.hotel.getIdHotel().equals(hotel.getIdHotel());
+	}
 }

@@ -61,5 +61,32 @@ public class RoomController {
 		
 		return "redirect:/hotel/" + room.getHotel().getIdHotel() + "/edit";
 	}
+	
+	@GetMapping("/hotel/{hotelId}/room/{roomId}/edit")
+	public String editRoom(Map<String, Object> model, @PathVariable int hotelId, @PathVariable int roomId) {
+		Optional<Hotel> hotel = hotelController.getHotelById(hotelId);
+		if (hotel.isPresent()) {
+			Optional<Room> room = roomRepository.findById(roomId);
+			if (room.isPresent() && room.get().ownedByThisHotel(hotel.get())) {
+				model.put("room", room);
+				return "hotel/room/edit";
+			}
+		}
+		
+		return "redirect:/hotel/" + hotelId + "/edit";
+	}
+	
+	@PostMapping("/hotel/{hotelId}/room/{roomId}/update")
+	public String updateRoom(Room room, @PathVariable int hotelId, @PathVariable int roomId) {
+		
+		Optional<Hotel> hotel = hotelController.getHotelById(hotelId);
+		if (hotel.isPresent()) {
+			room.setHotel(hotel.get());
+			room.setIdRoom(roomId);
+			roomRepository.save(room);
+		}
+		
+		return "redirect:/hotel/" + hotelId + "/room/" + roomId + "/edit";
+	}
 
 }
