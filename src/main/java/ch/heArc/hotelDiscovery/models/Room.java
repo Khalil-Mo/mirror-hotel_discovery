@@ -13,6 +13,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name="room")
 public class Room {
+	
+	public Room(Hotel hotel) {
+		setHotel(hotel);
+	}
+
+	public Room() {
+		
+	}
+	
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column
@@ -73,5 +83,13 @@ public class Room {
 
 	public void setPriceByNight(String priceByNight) {
 		this.priceByNight = priceByNight;
+	}
+	
+	public Hotel getHotel() {
+		return hotel;
+	}
+	
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 }

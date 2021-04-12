@@ -32,6 +32,28 @@
 			
 			<input type="hidden" th:field="*{idHotel}">
 		</form>
+		
+		<div class="row">
+			<div class="col-md-4 col-sm-6" th:each="room : ${rooms}">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title"><span th:text="${room.nbBed}"></span> beds</h5>
+						<div class="card-text">
+							<div><b><span th:text="${room.priceByNight}"></span> $ by nights</b></div>
+							<div><i></b><span th:text="${room.nbRoom}"></span> available room</i></div>
+							<p th:text="${room.description}"></p>
+						</div>
+						<div class="mt-3">
+							<a th:href="@{'room/' + ${room.idRoom} + '/edit'}" class="btn btn-primary">Edit</a>
+							<a href="" class="btn btn-danger">Delete</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="room/add">Add a room</a>
+		
+		
 
 
 		<footer th:insert="fragments/general.html :: footer"> </footer>

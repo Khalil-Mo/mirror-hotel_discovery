@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head th:insert="fragments/general.html :: head"></head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div class="container">
+		<h1>Add a new room</h1>
+
+		<form th:action="@{insert}" th:object="${room}" method="post">
+			<div class="mb-3">
+				<label for="description" class="form-label">Description</label>
+				<textarea class="form-control" id="description" th:field="*{description}"></textarea>
+			</div>
+			<div class="mb-3">
+				<label for="nbBed" class="form-label">Number of bed</label>
+				<input type="number" class="form-control" id="nbBed" th:field="*{nbBed}">
+			</div>
+			<div class="mb-3">
+				<label for="nbRoom" class="form-label">Number of available room</label>
+				<input type="number" class="form-control" id="nbRoom" th:field="*{nbRoom}"></input>
+			</div>
+			<div class="mb-3">
+				<label for="priceByNight" class="form-label">Price by night</label>
+				<input type="number" class="form-control" id="priceByNight" th:field="*{priceByNight}" step=".05"></input>
+			</div>
+			<input type="hidden" th:field="*{hotel}"></input>
+			<a href="/hotels" class="mr-2">Cancel</a>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+
+
+		<footer th:insert="fragments/general.html :: footer"> </footer>
+</body>
+</html>

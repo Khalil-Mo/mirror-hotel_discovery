@@ -1,5 +1,6 @@
 package ch.heArc.hotelDiscovery.Controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 import ch.heArc.hotelDiscovery.models.Hotel;
+import ch.heArc.hotelDiscovery.models.Room;
 import ch.heArc.hotelDiscovery.models.User;
 import ch.heArc.hotelDiscovery.repository.IHotelRepository;
 import ch.heArc.hotelDiscovery.services.HotelService;
@@ -26,6 +28,9 @@ public class HotelController {
     
     @Autowired 
     HotelService hotelService;
+    
+    @Autowired
+    RoomController roomController;
     
     
     @GetMapping("/hotels")
@@ -52,8 +57,6 @@ public class HotelController {
     	
     	if (connectedUser instanceof UserDetails) {
     		User user = (User)(connectedUser);
-    		System.out.println("User ID: " + user.getIdUser());
-    		System.out.println("User ID2: " + user.getId());
     		hotel.setManager(user);
         	hotelRepository.save(hotel);
         	return "redirect:/hotel/"+hotel.getIdHotel()+"/edit";
@@ -65,11 +68,13 @@ public class HotelController {
     public String edit(Map<String, Object> model, @PathVariable int hotelId) {
     	Optional<Hotel> hotel = getHotelById(hotelId);
     	if (hotel.isPresent()) {
+    		List<Room> rooms = roomController.roomRepository.findByHotel(hotel.get());
 			model.put("hotel", hotel.get());
+			model.put("rooms", rooms);
 			return "hotel/edit";
     	}
-    	return "hotel/edit";
-    	//return "redirect:/hotels";
+    	//return "hotel/edit";
+    	return "redirect:/hotels";
     }
     
     @PostMapping("/hotel/edit")
