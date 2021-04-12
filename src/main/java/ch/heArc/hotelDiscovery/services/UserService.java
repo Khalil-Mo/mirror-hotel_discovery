@@ -17,9 +17,8 @@ import ch.heArc.hotelDiscovery.repository.IUserRepository;
 @Service
 public class UserService implements UserDetailsService {
 
-	
 	private final IUserRepository userRepository;
-	
+
 	@Autowired
 	public UserService(IUserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -35,9 +34,9 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException(MessageFormat.format("User with email {0} cannot be found.", email));
 		}
 	}
-	
+
 	public void signUpUser(User user) {
-		
+
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 		final String encryptedPassword = encoder.encode(user.getPassword());

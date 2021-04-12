@@ -26,6 +26,10 @@ public class Hotel {
     @JoinColumn(name = "idUser")
     private User manager;
     
+    public void setManager(User user) {
+    	this.manager = user;
+    }
+    
     /*@OneToMany(fetch = FetchType.LAZY, mappedBy="Hotel")//TODO yo ?
     private List<Room> rooms;*/
     
@@ -73,6 +77,16 @@ public class Hotel {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public boolean isTheHotelManager(User user) {
+		System.out.println(user.getId());
+		System.out.println(manager.getId());
+		return manager != null && manager.getId().equals(user.getId());
+	}
+	
+	public User getManager() {
+		return manager;
 	}
 
 	@Column

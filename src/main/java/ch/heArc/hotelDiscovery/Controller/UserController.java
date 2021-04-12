@@ -25,7 +25,7 @@ public class UserController {
     
    
     
-    @GetMapping("/all")
+    /*@GetMapping("/all")
     public  String getAll(Map<String, Object> model) {
         
         model.put("users", userRepository.findAll());
@@ -47,7 +47,7 @@ public class UserController {
         
         return "user-form";
         
-    }
+    }*/
     
     @PostMapping("/signup")
 	String signUp(User user) {
