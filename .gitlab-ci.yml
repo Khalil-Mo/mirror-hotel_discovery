@@ -30,6 +30,8 @@ build:
     - alpine-docker
 
 unittest:
+  image: maven:latest
+  
   stage: test
   script:
     - echo "start test"
