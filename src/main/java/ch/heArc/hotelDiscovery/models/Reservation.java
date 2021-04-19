@@ -35,11 +35,14 @@ public class Reservation {
     @JoinColumn(name = "idRoom")
     private Room room;
     
-    @Column
-    private Date DateStart;
+
+
+
+	@Column
+    private Date dateStart;
     
     @Column
-    private Date DateEnd;
+    private Date dateEnd;
     
 
     public Reservation() {
@@ -58,22 +61,41 @@ public class Reservation {
 
 
 	public Date getDateStart() {
-		return DateStart;
+		return dateStart;
 	}
 
 
 	public void setDateStart(Date dateStart) {
-		DateStart = dateStart;
+		this.dateStart = dateStart;
 	}
 
 
 	public Date getDateEnd() {
-		return DateEnd;
+		return dateEnd;
 	}
 
 
 	public void setDateEnd(Date dateEnd) {
-		DateEnd = dateEnd;
+		this.dateEnd = dateEnd;
+	}
+	
+    public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	public Room getRoom() {
+		return room;
+	}
+
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
     
     

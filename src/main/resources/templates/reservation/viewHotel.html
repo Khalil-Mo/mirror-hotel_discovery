@@ -8,31 +8,97 @@
 		<p th:text="${hotel.description}"></p>
 
 		<p>
-		<span th:text="${hotel.address}"></span><br>
-		<b th:text="${hotel.city}"></b>
+			<span th:text="${hotel.address}"></span><br> <b th:text="${hotel.city}"></b>
 		</p>
-		
+
 		<img src="https://exp.cdn-hotels.com/hotels/1000000/990000/982000/981997/c724bace_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium">
-		
+
 		<div class="row">
 			<div class="col-md-6 col-sm-12" th:each="room : ${rooms}">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title"><span th:text="${room.nbBed}"></span> beds</h5>
+						<h5 class="card-title">
+							<span th:text="${room.nbBed}"></span> beds
+						</h5>
 						<div class="card-text">
-							<div><b><span th:text="${room.priceByNight}"></span> $ by nights</b></div>
-							<div><i></b><span th:text="${room.nbRoom}"></span> available room</i></div>
+							<div>
+								<b><span th:text="${room.priceByNight}"></span> $ by nights</b>
+							</div>
+							<div>
+								<i></b><span th:text="${room.nbRoom}"></span> available room</i>
+							</div>
 							<p th:text="${room.description}"></p>
 						</div>
 						<div class="mt-3">
-							<button class="btn btn-primary">Reservation</button>
+							<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookModal" th:onclick="|openModal('${room.idRoom}')|">Book</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<form th:action="@{/view/book}" th:object="${reservation}" method="post">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="bookModalLabel">Book an hotel</h5>
+							<a class="link bi bi-x " data-bs-dismiss="modal" aria-label="Close"></a>
+						</div>
+						<div class="modal-body">
+								<div class="mb-3">
+									<label class="form-label" for="checkin">Check In</label>
+									<input type="date" id="checkin" class="form-control" th:field="*{dateStart}" onchange="updatePrice()">
+								</div>
+								<div class="mb-3">
+									<label class="form-label" for="checkout">Check Out</label>
+									<input type="date" id="checkout" class="form-control" th:field="*{dateEnd}" onchange="updatePrice())">
+								</div>
+								<p id="price">3 nights for 54$</p>
+								<input type="hidden" th:field="*{room}" id="idRoom">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<input type="submit" class="btn btn-primary" value="Book">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
 
 	</div>
 	<footer th:insert="fragments/general.html :: footer"> </footer>
+	<script type="text/javascript" th:inline="javascript">
+		//var user = /*[[${session.user}]]*/ null;
+		//var rooms = /*[[${roomsJSON}]]*/ {};*/
+		let rooms = {};
+		
+		/*[# th:each="room : ${rooms}"]*/
+		rooms["[(${room.idRoom})]"] = [(${room.priceByNight})];
+		/*[/]*/
+		
+		console.log(rooms);
+		
+		function openModal(idRoom) {
+			console.log("onpenModal");
+			console.log(idRoom);
+			document.getElementById('idRoom').value = idRoom;
+			//document.getElementById()
+		}
+		function updatePrice() {
+			let date1 = document.getElementById('checkin').value;
+			let date2 = document.getElementById('checkout').value;
+			if (date1 != "" && date2 != "") {
+				date1 = new Date(date1);
+				date2 = new Date(date2);
+				var differenceInTime = date2.getTime() - date1.getTime();
+				var nbDay = differenceInTime / (1000 * 3600 * 24);
+				
+				console.log(nbDay)
+			}
+
+		}
+	</script>
 </body>
 </html>
