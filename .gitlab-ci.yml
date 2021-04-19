@@ -35,7 +35,6 @@ unittest:
   stage: test
   script:
     - echo "start test"
-    - mvn clean package
     - echo "test ok"
   only:
     - master
