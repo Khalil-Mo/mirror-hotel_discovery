@@ -1,5 +1,6 @@
 package ch.heArc.hotelDiscovery.Controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,14 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 import ch.heArc.hotelDiscovery.models.Hotel;
 import ch.heArc.hotelDiscovery.models.Reservation;
-import ch.heArc.hotelDiscovery.models.Room;
 import ch.heArc.hotelDiscovery.models.User;
 import ch.heArc.hotelDiscovery.repository.IHotelRepository;
 import ch.heArc.hotelDiscovery.services.HotelService;
-import ch.heArc.hotelDiscovery.services.UserService;
 
 @Controller
 public class HotelController {
@@ -133,9 +131,13 @@ public class HotelController {
     	Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	
     	if (connectedUser instanceof UserDetails) {
+    		Date yesterday = new Date((new Date()).getTime() - (1000 * 60 * 60 * 24));
     		User user = (User)(connectedUser);
-    		List<Reservation> reservations = reservationController.reservationRepository.findByHotelier(user);
+    		List<Reservation> reservations = reservationController.reservationRepository.findByHotelierAfterToday(user, yesterday);
     		model.put("reservations", reservations);
+    		
+    		List<Reservation> reservationsOld = reservationController.reservationRepository.findByHotelierBeforeToday(user, yesterday);
+    		model.put("old_reservations", reservationsOld);
     		return "hotel/bookings";
     	}
     	return "redirect:/login";

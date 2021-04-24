@@ -6,8 +6,9 @@
 	<div class="container">
 		<h1>My futures clients</h1>
 
+
 		<div class="row">
-			<div class="col-md-4 col-sm-6 mt-3" th:each="reservation : ${reservations}">
+			<div class="col-md-4 col-sm-6" th:each="reservation : ${reservations}">
 				<div class="card">
 					<div class="card-body">
 						<a th:href="|/view/${reservation.room.hotel.idHotel}|"><h5 class="card-title" th:text="${reservation.room.hotel.name}"></h5></a>
@@ -20,12 +21,12 @@
 					</div>
 					<div class="card-footer bg-transparent">
 						<h5>
-							<span th:text="${reservation.room.nbBed}"></span> beds
+							<span th:text="${reservation.room.nbBed}">3</span> beds
 						</h5>
 						<div class="card-text">
 							<i th:text="${reservation.room.description}"></i>
-							<div class="text-center h4">
-								<span th:text="${reservation.dateStart}"></span> - <span th:text="${reservation.dateEnd}"></span>
+							<div class="text-center h5">
+								<span th:text="${#dates.format(reservation.dateStart, 'dd MMM YYYY')}"></span> - <span th:text="${#dates.format(reservation.dateEnd, 'dd MMM YYYY')}"></span>
 							</div>
 						</div>
 					</div>
@@ -37,6 +38,44 @@
 				</div>
 			</div>
 		</div>
+		<details>
+			<summary>
+				<h2 style="display: inline-block;">Previous client</h2>
+			</summary>
+
+
+			<div class="row">
+				<div class="col-md-4 col-sm-6" th:each="reservation : ${old_reservations}">
+					<div class="card">
+						<div class="card-body">
+							<a th:href="|/view/${reservation.room.hotel.idHotel}|"><h5 class="card-title" th:text="${reservation.room.hotel.name}"></h5></a>
+							<div class="card-text">
+								<i th:text="${reservation.room.hotel.address}"></i>
+								<div>
+									<b th:text="${reservation.room.hotel.city}"></b>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer bg-transparent">
+							<h5>
+								<span th:text="${reservation.room.nbBed}">3</span> beds
+							</h5>
+							<div class="card-text">
+								<i th:text="${reservation.room.description}"></i>
+								<div class="text-center h5">
+									<span th:text="${#dates.format(reservation.dateStart, 'dd MMM YYYY')}"></span> - <span th:text="${#dates.format(reservation.dateEnd, 'dd MMM YYYY')}"></span>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer bg-transparent">
+							<h5>
+								Client: <span th:text="${reservation.user.email}"></span>
+							</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</details>
 
 
 
