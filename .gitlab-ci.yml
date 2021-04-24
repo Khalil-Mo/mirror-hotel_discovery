@@ -59,6 +59,7 @@ sonarqube:
   script:
     - echo "start sonarqube"
     - echo "sonarqube ok"
+    - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
     #- mvn clean package sonar:sonar -Dsonar.projectKey=hotel -Dsonar.host.url=http://157.26.83.83:9000 -Dsonar.login=4e9efa18f023c7809b1e6944f97435a1b23a3613 -Dmaven.test.skip=true
   only:
     - master
