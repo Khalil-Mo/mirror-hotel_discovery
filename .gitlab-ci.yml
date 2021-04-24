@@ -72,8 +72,8 @@ deploy_ssh:
     - echo "do some stuff before"
   script:
     - echo "deploy apps"
-    - docker-compose down
-    - docker-compose up -d
+    - docker-compose down --rmi all
+    - docker-compose up -d --build
     - echo "deploy ok"
   only:
     - master
