@@ -1,5 +1,7 @@
 package ch.heArc.hotelDiscovery.Controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,10 +54,13 @@ public class UserController {
     @PostMapping("/signup")
 	String signUp(User user) {
     	
-    	
-		userService.signUpUser(user);
-
-		return "redirect:/login";
+    	Optional<User> userExist = userRepository.findByEmail(user.getEmail());
+    	if (userExist.isEmpty()) {
+    		userService.signUpUser(user);
+    		return "redirect:/login";
+    	}
+    	return "redirect:/signup?exist";
+		
 	}
     
     @GetMapping("/signup")

@@ -1,5 +1,6 @@
 package ch.heArc.hotelDiscovery.Controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -73,9 +74,19 @@ public class ReservationController {
 		Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (connectedUser instanceof UserDetails) {
+			Date yesterday = new Date((new Date()).getTime() - (1000 * 60 * 60 * 24));
 			User user = (User) (connectedUser);
-			List<Reservation> reservations = reservationRepository.findByUser(user);
+			//List<Reservation> reservations = reservationRepository.findByUserOrderByDateStart(user);
+			List<Reservation> reservations = reservationRepository.findByUserAndDateEndAfterOrderByDateStartAsc(user, yesterday);
+			System.out.println(reservations);
 			model.put("reservations", reservations);
+			
+			List<Reservation> reservationsOld = reservationRepository.findByUserAndDateEndBeforeOrderByDateStartAsc(user, new Date());
+			System.out.println(reservationsOld);
+			model.put("old_reservations", reservationsOld);
+			
+			
+			
 			return "reservation/bookings";
 		}
 		return "redirect:/login";
