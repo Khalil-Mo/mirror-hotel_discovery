@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-@WebMvcTest
-@SpringBootTest
-class HotelDiscoveryApplicationTests {
+//@WebMvcTest
+//@SpringBootTest
+//class HotelDiscoveryApplicationTests {
 
-	@Test
-	void contextLoads() {
-		Assertions.assertTrue(true);
-	}
+//	@Test
+//	void contextLoads() {
+//		Assertions.assertTrue(true);
+//	}
 
-}
+//}
