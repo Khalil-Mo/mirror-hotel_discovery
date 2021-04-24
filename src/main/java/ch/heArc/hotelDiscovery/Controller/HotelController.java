@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 import ch.heArc.hotelDiscovery.models.Hotel;
+import ch.heArc.hotelDiscovery.models.Reservation;
 import ch.heArc.hotelDiscovery.models.Room;
 import ch.heArc.hotelDiscovery.models.User;
 import ch.heArc.hotelDiscovery.repository.IHotelRepository;
@@ -32,12 +33,17 @@ public class HotelController {
     @Autowired
     RoomController roomController;
     
+    @Autowired
+    ReservationController reservationController;
+    
     
     @GetMapping("/hotels")
     public  String getAll(Map<String, Object> model) {
         
     	Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	if (user instanceof UserDetails) {
+    		if (((User)user).getIsAdmin())
+				return "redirect:/admin/hotels";
     		model.put("hotels", hotelRepository.findByManager((User)user));
     	}
         
@@ -70,9 +76,9 @@ public class HotelController {
     public String edit(Map<String, Object> model, @PathVariable int hotelId) {
     	Optional<Hotel> hotel = getHotelById(hotelId);
     	if (hotel.isPresent()) {
-    		List<Room> rooms = roomController.roomRepository.findByHotel(hotel.get());
+    		//List<Room> rooms = roomController.roomRepository.findByHotel(hotel.get());
 			model.put("hotel", hotel.get());
-			model.put("rooms", rooms);
+			model.put("rooms", hotel.get().getRooms());
 			return "hotel/edit";
     	}
     	//return "hotel/edit";
@@ -82,9 +88,11 @@ public class HotelController {
     @PostMapping("/hotel/edit")
     public String update(Hotel hotel) {
     	Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	System.out.println("edit");
+    	Optional<Hotel> hotelVerification = getHotelById(hotel.getIdHotel());
+    	if (hotelVerification.isEmpty())
+    		return "redirect:/hotels";
     	if (connectedUser instanceof UserDetails) {
-			hotel.setManager((User)(connectedUser));
+			hotel.setManager(hotelVerification.get().getManager());
         	hotelRepository.save(hotel);
         	return "redirect:/hotel/"+hotel.getIdHotel()+"/edit";
     	}
@@ -101,6 +109,7 @@ public class HotelController {
     	return "redirect:/hotels";
     }
     
+    // Verify if connected user is the owner, then return the hotel
     public Optional<Hotel> getHotelById(int hotelId) {
     	Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	Optional<Hotel> hotelOpt = hotelRepository.findById(hotelId);
@@ -111,11 +120,26 @@ public class HotelController {
     	System.out.println("Hotel manager: " + hotel.getManager());
     	
     	if (connectedUser instanceof UserDetails) {
-    		if (hotel.isTheHotelManager((User)connectedUser)) {
+    		if (hotel.isTheHotelManager((User)connectedUser) || ((User)connectedUser).getIsAdmin()) {
     			return hotelOpt;
     		}
     	}
     	return Optional.empty();
+    }
+    
+	//For the hotelier
+	@GetMapping("/hotel/bookings")
+    public  String hotelBooking(Map<String, Object> model) {
+    	Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	
+    	if (connectedUser instanceof UserDetails) {
+    		User user = (User)(connectedUser);
+    		List<Reservation> reservations = reservationController.reservationRepository.findByHotelier(user);
+    		model.put("reservations", reservations);
+    		return "hotel/bookings";
+    	}
+    	return "redirect:/login";
+		
     }
     
 

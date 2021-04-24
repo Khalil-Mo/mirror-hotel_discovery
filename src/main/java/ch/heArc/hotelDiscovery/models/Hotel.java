@@ -39,6 +39,18 @@ public class Hotel {
     @Column
     private String description;
     
+
+	@Column
+    private String city;
+    
+    @Column
+    private String address;
+    
+
+
+	@OneToMany(mappedBy = "hotel")
+    private List<Room> rooms;
+    
     public Integer getIdHotel() {
 		return idHotel;
 	}
@@ -86,10 +98,13 @@ public class Hotel {
 	public User getManager() {
 		return manager;
 	}
+	
+    public List<Room> getRooms() {
+		return rooms;
+	}
 
-	@Column
-    private String city;
-    
-    @Column
-    private String address;
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
+	}
+
 }

@@ -29,7 +29,7 @@
 							</div>
 							<p th:text="${room.description}"></p>
 						</div>
-						<div class="mt-3">
+						<div class="mt-3" sec:authorize="hasAuthority('client')">
 							<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookModal" th:onclick="|openModal('${room.idRoom}')|">Book</button>
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 		</div>
 		<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModal" aria-hidden="true">
 			<div class="modal-dialog">
-				<form th:action="@{/view/book}" th:object="${reservation}" method="post">
+				<form th:action="@{/client/book}" th:object="${reservation}" method="post">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="bookModalLabel">Book an hotel</h5>
@@ -47,18 +47,18 @@
 						<div class="modal-body">
 								<div class="mb-3">
 									<label class="form-label" for="checkin">Check In</label>
-									<input type="date" id="checkin" class="form-control" th:field="*{dateStart}" onchange="updatePrice()">
+									<input type="date" id="checkin" class="form-control" th:field="*{dateStart}" onchange="updatePrice()" required>
 								</div>
 								<div class="mb-3">
 									<label class="form-label" for="checkout">Check Out</label>
-									<input type="date" id="checkout" class="form-control" th:field="*{dateEnd}" onchange="updatePrice())">
+									<input type="date" id="checkout" class="form-control" th:field="*{dateEnd}" onchange="updatePrice()" required>
 								</div>
-								<p id="price">3 nights for 54$</p>
+								<p id="price"></p>
 								<input type="hidden" th:field="*{room}" id="idRoom">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<input type="submit" class="btn btn-primary" value="Book">
+							<input type="submit" id="formSubmit" class="btn btn-primary" value="Book" disabled>
 						</div>
 					</div>
 				</form>
@@ -79,25 +79,40 @@
 		/*[/]*/
 		
 		console.log(rooms);
-		
+		let currentRoom = "0";
 		function openModal(idRoom) {
 			console.log("onpenModal");
 			console.log(idRoom);
 			document.getElementById('idRoom').value = idRoom;
 			//document.getElementById()
+			currentRoom = idRoom;
 		}
 		function updatePrice() {
+			disableForm();
 			let date1 = document.getElementById('checkin').value;
 			let date2 = document.getElementById('checkout').value;
 			if (date1 != "" && date2 != "") {
 				date1 = new Date(date1);
 				date2 = new Date(date2);
-				var differenceInTime = date2.getTime() - date1.getTime();
-				var nbDay = differenceInTime / (1000 * 3600 * 24);
-				
-				console.log(nbDay)
+				if (date1 - new Date() >= 0) { // later than today
+					let differenceInTime = date2.getTime() - date1.getTime();
+					let nbDay = differenceInTime / (1000 * 3600 * 24);
+					let price = nbDay * rooms[currentRoom];
+					if (nbDay > 0) {
+						document.getElementById('price').innerHTML = `${nbDay} nights for ${price}$`;
+						enableForm();
+					}
+				}
 			}
 
+		}
+		
+		function disableForm() {
+			document.getElementById('formSubmit').disabled = true;
+			document.getElementById('price').innerHTML = "Please enter a correct date";
+		}
+		function enableForm() {
+			document.getElementById('formSubmit').disabled = false;
 		}
 	</script>
 </body>

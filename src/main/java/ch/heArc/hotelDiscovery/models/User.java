@@ -16,33 +16,30 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-
-
 @Entity(name = "Users")
-@Table(name="user")
+@Table(name = "user")
 public class User implements UserDetails {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column
-    private Integer idUser;
-    
-    @Column
-    private String email;
-    
-    @Column
-    private String name;
-    
-    @Column
-    private String surname;
-    
-    @Column
-    private String password;
-    
-    @Column
-    private Boolean isManager;
-    
-    public Integer getIdUser() {
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column
+	private Integer idUser;
+
+	@Column
+	private String email;
+
+	@Column
+	private String name;
+
+	@Column
+	private String surname;
+
+	@Column
+	private String password;
+
+	@Column
+	private Boolean isManager;
+
+	public Integer getIdUser() {
 		return idUser;
 	}
 
@@ -55,27 +52,27 @@ public class User implements UserDetails {
 	}
 
 	@Column
-    private Boolean isAdmin;
+	private Boolean isAdmin;
 
-    public User() {
-        
-    }
+	public User() {
 
-    public Integer getId() {
-        return this.idUser;
-    }
-    
-    public String getEmail() {
-        return this.email;
-    }
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public Integer getId() {
+		return this.idUser;
+	}
 
-    public String getSurname() {
-        return this.surname;
-    }
+	public String getEmail() {
+		return this.email;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getSurname() {
+		return this.surname;
+	}
 
 	public void setIdUser(Integer idUser) {
 		this.idUser = idUser;
@@ -111,11 +108,15 @@ public class User implements UserDetails {
 		List<SimpleGrantedAuthority> l = new ArrayList<SimpleGrantedAuthority>();
 		if (isAdmin)
 			l.add(new SimpleGrantedAuthority("admin"));
-		if (isManager)
-			l.add(new SimpleGrantedAuthority("manager"));
-		
+		else {
+			if (isManager)
+				l.add(new SimpleGrantedAuthority("manager"));
+			else {
+				l.add(new SimpleGrantedAuthority("client"));
+			}
+		}
 		l.add(new SimpleGrantedAuthority("connected"));
-		
+
 		return l;
 	}
 
