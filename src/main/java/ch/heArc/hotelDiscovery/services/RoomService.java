@@ -8,11 +8,8 @@ import ch.heArc.hotelDiscovery.repository.IRoomRepository;
 @Service
 public class RoomService {
 
-	private final IRoomRepository roomRepository;
-
 	@Autowired
 	public RoomService(IRoomRepository roomRepository) {
-		this.roomRepository = roomRepository;
 	}
 
 }
