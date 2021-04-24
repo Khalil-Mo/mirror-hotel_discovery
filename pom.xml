@@ -16,6 +16,9 @@
 	<description>permet de découvrir des hotels!</description>
 	<properties>
 		<java.version>11</java.version>
+		<sonar.projectKey>Khalil-Mo_mirror-hotel_discovery</sonar.projectKey>
+  		<sonar.organization>khalil-mo</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
