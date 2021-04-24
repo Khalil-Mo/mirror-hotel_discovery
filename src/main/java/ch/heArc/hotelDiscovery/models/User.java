@@ -2,7 +2,6 @@ package ch.heArc.hotelDiscovery.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,6 +18,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity(name = "Users")
 @Table(name = "user")
 public class User implements UserDetails {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
@@ -104,7 +108,6 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("admin");
 		List<SimpleGrantedAuthority> l = new ArrayList<SimpleGrantedAuthority>();
 		if (isAdmin)
 			l.add(new SimpleGrantedAuthority("admin"));

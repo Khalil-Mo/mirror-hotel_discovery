@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
 
 		user.setPassword(encryptedPassword);
 		user.setIsAdmin(false);
-		final User createdUser = userRepository.save(user);
+		userRepository.save(user);
 
 	}
 
