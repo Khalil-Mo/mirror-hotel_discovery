@@ -28,10 +28,19 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div sec:authorize="isAuthenticated()" class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
+				<ul class="navbar-nav" sec:authorize="hasAuthority('manager')">
 					<li class="nav-item"><span class="nav-link">Connecté <a href="/logout"><i class="bi bi-box-arrow-right"></i></a></span></li>
-					<li class="nav-item"><a href="/hotels" class="nav-link">Hotels</a></li>
-
+					<li class="nav-item"><a href="/hotels" class="nav-link">My hotels</a></li>
+					<li class="nav-item"><a href="/hotel/bookings" class="nav-link">Hotel's reservation</a></li>
+				</ul>
+				<ul class="navbar-nav" sec:authorize="hasAuthority('client')">
+					<li class="nav-item"><span class="nav-link">Connecté <a href="/logout"><i class="bi bi-box-arrow-right"></i></a></span></li>
+					<li class="nav-item"><a href="/client/bookings" class="nav-link">My reservation</a></li>
+				</ul>
+				
+				<ul class="navbar-nav" sec:authorize="hasAuthority('admin')">
+					<li class="nav-item"><span class="nav-link">Connecté <a href="/logout"><i class="bi bi-box-arrow-right"></i></a></span></li>
+					<li class="nav-item"><a href="/admin/hotels" class="nav-link">All hotels</a></li>
 				</ul>
 			</div>
 			<div sec:authorize="isAnonymous()" class="collapse navbar-collapse" id="navbarNav">

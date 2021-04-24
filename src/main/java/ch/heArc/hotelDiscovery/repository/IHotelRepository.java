@@ -13,5 +13,4 @@ public interface IHotelRepository extends JpaRepository<Hotel, Integer> {
 	List<Hotel> findByManager(User manager);
 	List<Hotel> findByCity(String city);
 	
-	
 }
