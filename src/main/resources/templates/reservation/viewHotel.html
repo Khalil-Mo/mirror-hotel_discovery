@@ -55,6 +55,7 @@
 								</div>
 								<p id="price"></p>
 								<input type="hidden" th:field="*{room}" id="idRoom">
+								<input type="hidden" th:if="${discover == true}" name="discovery" value="discover">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -64,7 +65,10 @@
 				</form>
 			</div>
 		</div>
-
+		
+		<div class="text-center mt-5" th:if="${discover == true}">
+			<a href="/client/discovery" class="btn btn-info btn-lg">Next Hotel Discovery©</a>
+		</div>
 
 
 	</div>

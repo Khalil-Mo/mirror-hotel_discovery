@@ -2,6 +2,7 @@ package ch.heArc.hotelDiscovery.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public class Hotel {
     
 
 
-	@OneToMany(mappedBy = "hotel")
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Room> rooms;
     
     public Integer getIdHotel() {

@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	      //.logoutSuccessHandler(logoutSuccessHandler());*/
 		http        
         .authorizeRequests()
-        	.antMatchers("/", "/home").permitAll()
+        	.antMatchers("/").permitAll()
         	.antMatchers("/img/*").permitAll()
             //.anyRequest().authenticated()
             //.anyRequest().hasRole("USER")

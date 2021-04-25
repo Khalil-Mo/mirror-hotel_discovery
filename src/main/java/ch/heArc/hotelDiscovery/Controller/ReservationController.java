@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +42,7 @@ public class ReservationController {
 	IReservationRepository reservationRepository;
 
 	@GetMapping("/view/{hotelId}")
-	public String searchCity(Map<String, Object> model, @PathVariable int hotelId) {
+	public String viewHotel(Map<String, Object> model, @PathVariable int hotelId) {
 
 		Optional<Hotel> hotel = hotelRepository.findById(hotelId);
 
@@ -54,19 +57,57 @@ public class ReservationController {
 
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 	}
+	
+	@GetMapping("/discover/{hotelId}")
+	public String discoverHotel(Map<String, Object> model, @PathVariable int hotelId) {
+
+		Optional<Hotel> hotel = hotelRepository.findById(hotelId);
+
+		if (hotel.isPresent()) {
+			List<Room> rooms = roomController.roomRepository.findByHotel(hotel.get());
+			model.put("hotel", hotel.get());
+			model.put("rooms", rooms);
+			model.put("reservation", new Reservation());
+			model.put("discover", true);
+
+			return "reservation/viewHotel";
+		}
+
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
+	}
 
 	@PostMapping("/client/book")
-	public String create(Reservation reservation) {
+	public String create(Reservation reservation, HttpServletRequest request) {
 		Object connectedUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (connectedUser instanceof UserDetails) {
 			User user = (User) (connectedUser);
 			reservation.setUser(user);
 			reservationRepository.save(reservation);
-			return "redirect:/bookings";
+			System.out.println("Discovery::::");
+			System.out.println("Discovery::::");
+			System.out.println("Discovery::::");
+			System.out.println(request.getParameter("discovery"));
+			if (request.getParameter("discovery") != null && request.getParameter("discovery").equals("discover")) {
+				System.out.println("discovery inside");
+				return "redirect:/client/discovery";
+			}
+			return "redirect:/client/bookings";
 		}
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/client/discovery")
+	public String discovery(Map<String, Object> model) {
+		
+		
+		List<Hotel> allHotels = hotelRepository.findAll();
+		Random r = new Random();
+		int n = r.nextInt(allHotels.size());
+		int idHotel = allHotels.get(n).getIdHotel();
+		return "redirect:/discover/" + idHotel;
+	}
+	
 
 	// For the client
 	@GetMapping("/client/bookings")
