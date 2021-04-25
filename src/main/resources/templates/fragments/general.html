@@ -18,12 +18,15 @@
        display: none !important;
    }
 }*/
+body {
+background-color: #ebedff;
+}
 </style>
 </head>
 <body>
 	<header th:fragment="header" class="mb-5">
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
-			<div style="height: 50px"><img src="/img/logo.png" height="100px" style="margin-top: -30px"></div>
+			<div style="height: 50px"><a href="/"><img src="/img/logo.png" height="100px" style="margin-top: -30px"></a></div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>

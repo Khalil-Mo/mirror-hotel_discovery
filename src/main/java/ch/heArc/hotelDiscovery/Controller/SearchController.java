@@ -1,5 +1,6 @@
 package ch.heArc.hotelDiscovery.Controller;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 
 import ch.heArc.hotelDiscovery.models.Hotel;
 import ch.heArc.hotelDiscovery.repository.IHotelRepository;
@@ -26,6 +28,24 @@ public class SearchController {
     	model.put("hotels", hotels);
         
         return "search/result";
+    }
+    
+    
+    @GetMapping("/")
+    public  String index(Map<String, Object> model) {
+
+    	List<String> cities = hotelRepository.findDistinctCity();
+    	
+    	String citiesArray = "[";
+    	
+    	for (var city: cities) {
+    		citiesArray += "'" + city + "', ";
+    	}
+    	citiesArray += "'']";
+    	model.put("cities2", citiesArray);
+    	model.put("cities", cities);
+        
+        return "index";
     }
     
     
