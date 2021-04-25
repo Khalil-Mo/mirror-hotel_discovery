@@ -11,7 +11,11 @@
 			<span th:text="${hotel.address}"></span><br> <b th:text="${hotel.city}"></b>
 		</p>
 
-		<hr/>
+		<div class="text-center">
+			<img src="https://cf.bstatic.com/images/hotel/max1024x768/145/145267057.jpg" class="img-fluid">
+		</div>
+
+		<hr />
 
 		<div class="row">
 			<div class="col-md-6 col-sm-12" th:each="room : ${rooms}">
@@ -45,17 +49,14 @@
 							<a class="link bi bi-x " data-bs-dismiss="modal" aria-label="Close"></a>
 						</div>
 						<div class="modal-body">
-								<div class="mb-3">
-									<label class="form-label" for="checkin">Check In</label>
-									<input type="date" id="checkin" class="form-control" th:field="*{dateStart}" onchange="updatePrice()" required>
-								</div>
-								<div class="mb-3">
-									<label class="form-label" for="checkout">Check Out</label>
-									<input type="date" id="checkout" class="form-control" th:field="*{dateEnd}" onchange="updatePrice()" required>
-								</div>
-								<p id="price"></p>
-								<input type="hidden" th:field="*{room}" id="idRoom">
-								<input type="hidden" th:if="${discover == true}" name="discovery" value="discover">
+							<div class="mb-3">
+								<label class="form-label" for="checkin">Check In</label> <input type="date" id="checkin" class="form-control" th:field="*{dateStart}" onchange="updatePrice()" required>
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="checkout">Check Out</label> <input type="date" id="checkout" class="form-control" th:field="*{dateEnd}" onchange="updatePrice()" required>
+							</div>
+							<p id="price"></p>
+							<input type="hidden" th:field="*{room}" id="idRoom"> <input type="hidden" th:if="${discover == true}" name="discovery" value="discover">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -65,7 +66,7 @@
 				</form>
 			</div>
 		</div>
-		
+
 		<div class="text-center mt-5" th:if="${discover == true}">
 			<a href="/client/discovery" class="btn btn-info btn-lg">Next Hotel Discovery©</a>
 		</div>

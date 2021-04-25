@@ -38,26 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		// http builder configurations for authorize requests and form login (see below)
-		/*http
-	      .csrf().disable()
-	      .authorizeRequests()
-	      .antMatchers("/admin/**").hasRole("ADMIN")
-	      .antMatchers("/anonymous*").anonymous()
-	      .antMatchers("/signin*").permitAll()
-	      .antMatchers("/login*").permitAll()
-	      .anyRequest().authenticated()
-	      .and()
-	      .formLogin()
-	      .loginPage("/signin")
-	      .loginProcessingUrl("/perform_login")
-	      .defaultSuccessUrl("/home", true)
-	      .failureUrl("/error")
-	      //.failureHandler(authenticationFailureHandler())
-	      .and()
-	      .logout()
-	      .logoutUrl("/perform_logout")
-	      .deleteCookies("JSESSIONID");
-	      //.logoutSuccessHandler(logoutSuccessHandler());*/
 		http        
         .authorizeRequests()
         	.antMatchers("/").permitAll()

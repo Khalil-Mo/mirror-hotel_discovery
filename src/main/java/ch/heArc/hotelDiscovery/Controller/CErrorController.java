@@ -1,5 +1,5 @@
 package ch.heArc.hotelDiscovery.Controller;
-/*import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,8 +17,9 @@ public class CErrorController implements ErrorController  {
 		return null;
 	}
 
-}*/
-
+}
+/*
 public class CErrorController {
 	
 }
+*/

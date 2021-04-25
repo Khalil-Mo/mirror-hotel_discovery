@@ -93,7 +93,7 @@ public class Hotel {
 	}
 	
 	public boolean isTheHotelManager(User user) {
-		return manager != null && manager.getId().equals(user.getId());
+		return manager != null && manager.getId().equals(user.getId()) || user.getIsAdmin();
 	}
 	
 	public User getManager() {
